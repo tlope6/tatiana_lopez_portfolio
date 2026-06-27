@@ -1,0 +1,16 @@
+{
+  "files": {
+    "main.js": "/tatiana_lopez_portfolio/static/js/main.b19cc50d.js",
+    "static/media/githubpic.png": "/tatiana_lopez_portfolio/static/media/githubpic.de6cf642f14794e6f624.png",
+    "static/media/globalStudios.png": "/tatiana_lopez_portfolio/static/media/globalStudios.611af9f9a1dccb750622.png",
+    "static/media/dream.png": "/tatiana_lopez_portfolio/static/media/dream.c39399040f938cd0c396.png",
+    "static/media/saycheese.png": "/tatiana_lopez_portfolio/static/media/saycheese.03cc82d25044fc20c7d5.png",
+    "static/media/hobbyist_find.png": "/tatiana_lopez_portfolio/static/media/hobbyist_find.d4b76950377c2ea71276.png",
+    "static/media/Capital_Chronicles.png": "/tatiana_lopez_portfolio/static/media/Capital_Chronicles.5f4b307481b1af34c9fa.png",
+    "index.html": "/tatiana_lopez_portfolio/index.html",
+    "main.b19cc50d.js.map": "/tatiana_lopez_portfolio/static/js/main.b19cc50d.js.map"
+  },
+  "entrypoints": [
+    "static/js/main.b19cc50d.js"
+  ]
+}
