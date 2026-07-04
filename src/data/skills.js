@@ -1,16 +1,15 @@
 export const SKILLS = [
   { name: "Python", level: 90 },
   { name: "Java", level: 80 },
-  { name: "C++", level: 75 },
-  { name: "C", level: 70 },
+  { name: "C++", level: 56 },
+  { name: "C", level: 50 },
   { name: "JavaScript", level: 80 },
   { name: "Java", level: 60},
   { name: "React", level: 75 },
-  { name: "SQL", level: 70 },
+  { name: "SQL", level: 60 },
   { name: "HTML", level: 85 },
   { name: "CSS", level: 80 },
   { name: "F#", level: 30},
-  { name: ".NET", level: 20},
   { name: "Go", level: 10},
   
 ];
