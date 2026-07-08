@@ -4,7 +4,6 @@ export const SKILLS = [
   { name: "C++", level: 56 },
   { name: "C", level: 50 },
   { name: "JavaScript", level: 80 },
-  { name: "Java", level: 60},
   { name: "React", level: 75 },
   { name: "SQL", level: 60 },
   { name: "HTML", level: 85 },
@@ -14,7 +13,17 @@ export const SKILLS = [
   
 ];
 
+
+export const SKILL_ICONS = [
+  "Python", "Java", "C++", "JavaScript", "React",
+  "SQL", "Git", "HTML", "CSS", "Linux",
+];
+
+
+
+
 export const NAV_LINKS = [
+  { label: "Home", href: "#home" },
   { label: "About", href: "#about" },
   { label: "Projects", href: "#projects" },
   { label: "Skills", href: "#skills" },
