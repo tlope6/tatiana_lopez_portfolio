@@ -4,6 +4,7 @@ import dream from "../assets/dream.png"
 import hobbyist_find from "../assets/hobbyist_find.png"
 import saycheese from "../assets/saycheese.png"
 import Capital_Chronicles from "../assets/Capital_Chronicles.png"
+import SketchSpeak from "../assets/SketchSpeak.png"
 export const PROJECTS = [
 
   {
@@ -102,6 +103,22 @@ export const PROJECTS = [
     liveLink: "https://tlope6.github.io/GlobalStudios/",
     color: "#9e7bb5",
   },
+  {
+    id: 6, 
+    title: "SketchSpeak", 
+    subtitle: "Natural User Interaction - Prototype - Product Management", 
+    details: [
+      "SketchSpeak is a smartphone interface for generating and editing images through natural conversations. Instead of navigating menus and buttons, users draw, point, gesture, and speak directly on the image, and the AI responds by showing its interpretation, previewing changes, and asking short clarifying questions before acting. ",
+      "The design is built around specification alignment: at every step, the user can see what the AI understood and correct it before anything is generated or changed." 
+    ],
+    tech: ["Figma"],
+    filters: ["Figma"],
+    tags: ["Product Management", "Figma"],
+    image: SketchSpeak, 
+    liveLink: "https://camera-squid-57948396.figma.site", 
+    color: "#74bd6b",
+    
+  }
 ];
 
 // Auto-generate filter categories from all projects

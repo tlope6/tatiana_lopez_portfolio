@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useRevealOnScroll } from "../hooks/useRevealOnScroll";
 import { PROJECTS } from "../data/projects";
 
-const FILTERS = ["All", "Python", "ML", "Vision", "UI/UX"];
+const FILTERS = ["All", "Python", "ML", "Vision", "UI/UX", "Figma"];
 
 function ProjectCard({ project, index }) {
   const [ref, vis] = useRevealOnScroll(0.1);
@@ -48,8 +48,21 @@ function ProjectCard({ project, index }) {
           </span>
         ))}
       </div>
-      <a href={project.link} target="_blank" rel="noopener noreferrer" style={{ color: "#b8a0d8", textDecoration: "none", fontWeight: 600, fontSize: "0.82rem", transition: "color 0.3s" }}>
-        View on GitHub →
+      <a
+        href={project.liveLink || project.link}
+        target="_blank"
+        rel="noopener noreferrer"
+        style={{
+          color: "#b8a0d8",
+          textDecoration: "none",
+          fontWeight: 600,
+          fontSize: "0.82rem",
+          transition: "color 0.3s",
+        }}
+      >
+        {project.tech.includes("Figma")
+          ? "View Figma Prototype →"
+          : "View Project Here →"}
       </a>
     </div>
   );
@@ -63,10 +76,10 @@ export default function Projects() {
     filter === "All"
       ? PROJECTS
       : PROJECTS.filter(
-          (p) =>
-            p.tech.some((t) => t.toLowerCase().includes(filter.toLowerCase())) ||
-            p.subtitle.toLowerCase().includes(filter.toLowerCase())
-        );
+        (p) =>
+          p.tech.some((t) => t.toLowerCase().includes(filter.toLowerCase())) ||
+          p.subtitle.toLowerCase().includes(filter.toLowerCase())
+      );
 
   return (
     <section id="projects" style={{ padding: "100px 20px", maxWidth: 1100, margin: "0 auto", position: "relative", zIndex: 1 }}>

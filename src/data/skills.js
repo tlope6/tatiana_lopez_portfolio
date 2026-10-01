@@ -8,7 +8,6 @@ export const SKILLS = [
   { name: "SQL", level: 60 },
   { name: "HTML", level: 85 },
   { name: "CSS", level: 80 },
-  { name: "F#", level: 30},
   { name: "Go", level: 10},
   
 ];
