@@ -3,8 +3,13 @@ export const EXPERIENCES = [
     { id: 1, 
       role : "Sales & Customer Intern",
       company: "HERE Technologies",
-      date: "June 2026 - Present", 
-      bullets : [],
+      date: "June 2026 - August 2026", 
+      bullets : [
+            "Collaborated with BSA intern to build an internal knowledge system allowing BSA team members to input and organize information in one centralized location",
+            "Integrated AI retrieval capabilities into the knowledge system, enabling team members to query information and surface relevant solutions and resources quickly",
+            "Collaborated with a sales team member to develop a fleet and on-demand mobility demo enabling more effective visual communication of HERE's platform capabilities to customers",
+
+      ],
       color: "#f2f3d9"
     },
     {

@@ -1,80 +1,48 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useRevealOnScroll } from "../hooks/useRevealOnScroll";
 import { SKILLS } from "../data/skills";
 
 const COLORS = [
-  "#7c8aff", "#ff8a9e", "#8affc1", "#ffd68a", "#c78aff",
-  "#8ad8ff", "#ff8ad8", "#8affea", "#ffb38a", "#a8ff8a", "#8a9eff",
+  "#c88aff", "#a78bfa", "#d8b4fe", "#b694f8", "#e0aaff",
+  "#c88aff", "#a78bfa", "#d8b4fe", "#b694f8", "#e0aaff",
 ];
 
-function SkillBar({ name, level, delay, color }) {
-  const [ref, isVisible] = useRevealOnScroll(0.1);
-  const [hovered, setHovered] = useState(false);
+function SkillBar({ name, level, color, delay }) {
+  const [ref, vis] = useRevealOnScroll(0.1);
+  const [h, setH] = useState(false);
 
   return (
     <div
       ref={ref}
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
+      onMouseEnter={() => setH(true)}
+      onMouseLeave={() => setH(false)}
       style={{
-        marginBottom: 18,
-        opacity: isVisible ? 1 : 0,
-        transform: isVisible ? "translateY(0)" : "translateY(20px)",
-        transition: `all 0.6s ease ${delay * 0.08}s`,
-        padding: "8px 12px",
-        borderRadius: 10,
-        background: hovered ? "rgba(255,255,255,0.03)" : "transparent",
-        cursor: "default",
+        marginBottom: 16,
+        padding: "6px 10px",
+        borderRadius: 8,
+        background: h ? "rgba(200,138,255,0.04)" : "transparent",
+        opacity: vis ? 1 : 0,
+        transform: vis ? "translateY(0)" : "translateY(16px)",
+        transition: `all 0.5s ease ${delay * 0.07}s`,
       }}
     >
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          marginBottom: 8,
-        }}
-      >
-        <span
-          style={{
-            color: hovered ? "#e0e4ff" : "#c5cce6",
-            fontSize: "0.9rem",
-            fontWeight: 600,
-            transition: "color 0.3s ease",
-          }}
-        >
+      <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 6 }}>
+        <span style={{ color: h ? "#e0d0ff" : "#c0b0e0", fontSize: "0.88rem", fontWeight: 600, transition: "color 0.3s" }}>
           {name}
         </span>
-        <span
-          style={{
-            color: hovered ? color : "#6e7494",
-            fontSize: "0.8rem",
-            fontWeight: 600,
-            transition: "color 0.3s ease",
-          }}
-        >
+        <span style={{ color: h ? color : "#5a4f80", fontSize: "0.78rem", fontWeight: 600, transition: "color 0.3s" }}>
           {level}%
         </span>
       </div>
-      <div
-        style={{
-          height: 6,
-          borderRadius: 3,
-          background: "rgba(255,255,255,0.06)",
-          overflow: "hidden",
-        }}
-      >
+      <div style={{ height: 5, borderRadius: 3, background: "rgba(200,138,255,0.06)", overflow: "hidden" }}>
         <div
           style={{
             height: "100%",
             borderRadius: 3,
-            width: isVisible ? `${level}%` : "0%",
+            width: vis ? `${level}%` : "0%",
             background: `linear-gradient(90deg, ${color}, ${color}88)`,
-            transition: `width 1.2s cubic-bezier(0.23, 1, 0.32, 1) ${
-              delay * 0.08 + 0.3
-            }s`,
-            boxShadow: hovered
-              ? `0 0 14px ${color}50`
-              : `0 0 8px ${color}30`,
+            transition: `width 1.2s cubic-bezier(0.23,1,0.32,1) ${delay * 0.07 + 0.2}s`,
+            boxShadow: h ? `0 0 12px ${color}40` : `0 0 6px ${color}25`,
           }}
         />
       </div>
@@ -83,46 +51,30 @@ function SkillBar({ name, level, delay, color }) {
 }
 
 export default function Skills() {
-  const [ref, isVisible] = useRevealOnScroll(0.1);
+  const [ref, vis] = useRevealOnScroll(0.1);
 
   return (
-    <section
-      id="skills"
-      style={{
-        padding: "100px 20px",
-        maxWidth: 700,
-        margin: "auto",
-        position: "relative",
-        zIndex: 1,
-      }}
-    >
+    <section id="skills" style={{ padding: "100px 20px", maxWidth: 700, margin: "0 auto", position: "relative", zIndex: 1 }}>
       <h2
         ref={ref}
         style={{
           textAlign: "center",
-          fontSize: "clamp(1.8rem, 4vw, 2.4rem)",
+          fontFamily: "'Syne', sans-serif",
+          fontSize: "clamp(1.8rem, 4vw, 2.6rem)",
+          fontWeight: 800,
           marginBottom: 50,
-          background: "linear-gradient(135deg, #b5c8ff, #d8b4fe)",
-          backgroundClip: "text",
-          WebkitBackgroundClip: "text",
-          WebkitTextFillColor: "transparent",
-          opacity: isVisible ? 1 : 0,
-          transform: isVisible ? "translateY(0)" : "translateY(30px)",
+          opacity: vis ? 1 : 0,
+          transform: vis ? "translateY(0)" : "translateY(25px)",
           transition: "all 0.8s ease",
-          fontWeight: 700,
         }}
       >
-        Skills
+        <span style={{ color: "#f0e8ff" }}>✦ </span>
+        <span style={{ color: "#c88aff" }}>Skills</span>
+        <span style={{ color: "#f0e8ff" }}> ✦</span>
       </h2>
 
-      {SKILLS.map((skill, i) => (
-        <SkillBar
-          key={skill.name}
-          name={skill.name}
-          level={skill.level}
-          delay={i}
-          color={COLORS[i % COLORS.length]}
-        />
+      {SKILLS.map((s, i) => (
+        <SkillBar key={s.name} name={s.name} level={s.level} color={COLORS[i % COLORS.length]} delay={i} />
       ))}
     </section>
   );

@@ -1,153 +1,124 @@
 import { useState } from "react";
 import { useRevealOnScroll } from "../hooks/useRevealOnScroll";
-import ProjectShowcase from "./ProjectShowCase";
-import { PROJECTS, FILTER_TAGS } from "../data/projects";
+import { PROJECTS } from "../data/projects";
 
-function FilterTab({ label, isActive, onClick }) {
-  const [hovered, setHovered] = useState(false);
+const FILTERS = ["All", "Python", "ML", "Vision", "UI/UX"];
+
+function ProjectCard({ project, index }) {
+  const [ref, vis] = useRevealOnScroll(0.1);
+  const [h, setH] = useState(false);
 
   return (
-    <button
-      onClick={onClick}
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
+    <div
+      ref={ref}
+      onMouseEnter={() => setH(true)}
+      onMouseLeave={() => setH(false)}
       style={{
-        padding: "8px 20px",
-        borderRadius: 25,
-        border: isActive
-          ? "1px solid rgba(168,198,255,0.4)"
-          : hovered
-          ? "1px solid rgba(255,255,255,0.15)"
-          : "1px solid rgba(255,255,255,0.06)",
-        background: isActive
-          ? "rgba(168,198,255,0.15)"
-          : hovered
-          ? "rgba(255,255,255,0.06)"
-          : "rgba(255,255,255,0.02)",
-        color: isActive ? "#b4c8ff" : hovered ? "#c5cce6" : "#6e7494",
-        fontSize: "0.82rem",
-        fontWeight: 600,
-        letterSpacing: "0.5px",
-        cursor: "pointer",
-        transition: "all 0.3s ease",
-        outline: "none",
-        fontFamily: "inherit",
-        boxShadow: isActive
-          ? "0 0 15px rgba(168,198,255,0.1)"
-          : "none",
-        transform: isActive
-          ? "scale(1.05)"
-          : hovered
-          ? "scale(1.02)"
-          : "scale(1)",
+        background: h ? "rgba(200,138,255,0.06)" : "rgba(200,138,255,0.02)",
+        border: h ? `1px solid ${project.color}40` : "1px solid rgba(200,138,255,0.06)",
+        borderRadius: 18,
+        padding: 26,
+        transition: "all 0.5s ease",
+        transform: vis ? (h ? "translateY(-6px)" : "translateY(0)") : "translateY(40px)",
+        opacity: vis ? 1 : 0,
+        transitionDelay: `${index * 0.1}s`,
+        boxShadow: h ? `0 8px 35px ${project.color}15` : "none",
       }}
     >
-      {label}
-    </button>
+      <div style={{ fontSize: "0.68rem", color: project.color, fontWeight: 600, letterSpacing: "1.5px", textTransform: "uppercase", marginBottom: 8 }}>
+        {project.subtitle}
+      </div>
+      <h3 style={{ fontFamily: "'Syne', sans-serif", fontSize: "1.25rem", color: "#f0e8ff", margin: "0 0 10px", fontWeight: 700 }}>
+        {project.title}
+      </h3>
+      <p style={{ color: "#8a7aaa", fontSize: "0.88rem", lineHeight: 1.65, marginBottom: 16 }}>
+        {project.description}
+      </p>
+      <div style={{ marginBottom: 16 }}>
+        {project.details.map((d, i) => (
+          <div key={i} style={{ display: "flex", gap: 8, fontSize: "0.82rem", color: "#7a6fa8", marginBottom: 5, lineHeight: 1.4 }}>
+            <span style={{ color: project.color, opacity: 0.6 }}>▸</span>{d}
+          </div>
+        ))}
+      </div>
+      <div style={{ display: "flex", gap: 6, flexWrap: "wrap", marginBottom: 16 }}>
+        {project.tech.map((t) => (
+          <span key={t} style={{ fontSize: "0.68rem", padding: "3px 10px", borderRadius: 12, background: `${project.color}10`, border: `1px solid ${project.color}20`, color: project.color, fontWeight: 600 }}>
+            {t}
+          </span>
+        ))}
+      </div>
+      <a href={project.link} target="_blank" rel="noopener noreferrer" style={{ color: "#b8a0d8", textDecoration: "none", fontWeight: 600, fontSize: "0.82rem", transition: "color 0.3s" }}>
+        View on GitHub →
+      </a>
+    </div>
   );
 }
 
 export default function Projects() {
-  const [ref, isVisible] = useRevealOnScroll(0.);
-  const [activeFilter, setActiveFilter] = useState("All");
+  const [ref, vis] = useRevealOnScroll(0.05);
+  const [filter, setFilter] = useState("All");
 
-  const filteredProjects =
-    activeFilter === "All"
+  const filtered =
+    filter === "All"
       ? PROJECTS
-      : PROJECTS.filter((p) => p.filters.includes(activeFilter));
+      : PROJECTS.filter(
+          (p) =>
+            p.tech.some((t) => t.toLowerCase().includes(filter.toLowerCase())) ||
+            p.subtitle.toLowerCase().includes(filter.toLowerCase())
+        );
 
   return (
-    <section
-      id="projects"
-      style={{
-        padding: "100px 20px 40px",
-        maxWidth: 1100,
-        margin: "auto",
-        position: "relative",
-        zIndex: 1,
-      }}
-    >
-      <h2
-        ref={ref}
-        style={{
-          textAlign: "center",
-          fontSize: "clamp(1.8rem, 4vw, 2.4rem)",
-          marginBottom: 20,
-          background: "linear-gradient(135deg, #b5c8ff, #d8b4fe)",
-          backgroundClip: "text",
-          WebkitBackgroundClip: "text",
-          WebkitTextFillColor: "transparent",
-          opacity: isVisible ? 1 : 0,
-          transform: isVisible ? "translateY(0)" : "translateY(30px)",
-          transition: "all 0.8s ease",
-          fontWeight: 700,
-        }}
-      >
-        Projects
-      </h2>
+    <section id="projects" style={{ padding: "100px 20px", maxWidth: 1100, margin: "0 auto", position: "relative", zIndex: 1 }}>
+      <div style={{ textAlign: "center", marginBottom: 40 }}>
+        <h2
+          ref={ref}
+          style={{
+            fontFamily: "'Syne', sans-serif",
+            fontSize: "clamp(1.8rem, 4vw, 2.6rem)",
+            fontWeight: 800,
+            opacity: vis ? 1 : 0,
+            transform: vis ? "translateY(0)" : "translateY(25px)",
+            transition: "all 0.8s ease",
+          }}
+        >
+          <span style={{ color: "#f0e8ff" }}>✦ </span>
+          <span style={{ color: "#c88aff" }}>Projects</span>
+          <span style={{ color: "#f0e8ff" }}> ✦</span>
+        </h2>
+        <p style={{ color: "#6a5a88", fontSize: "0.88rem", marginTop: 8 }}>
+          A selection of things I've built
+        </p>
+      </div>
 
-      <p
-        style={{
-          textAlign: "center",
-          color: "#6e7494",
-          fontSize: "0.95rem",
-          marginBottom: 30,
-          opacity: isVisible ? 1 : 0,
-          transition: "opacity 1s ease 0.3s",
-        }}
-      >
-        A selection of things I've built — filter by technology
-      </p>
-
-      {/* Filter tabs */}
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          gap: 10,
-          flexWrap: "wrap",
-          marginBottom: 40,
-          opacity: isVisible ? 1 : 0,
-          transition: "opacity 1s ease 0.4s",
-        }}
-      >
-        {FILTER_TAGS.map((tag) => (
-          <FilterTab
-            key={tag}
-            label={tag}
-            isActive={activeFilter === tag}
-            onClick={() => setActiveFilter(tag)}
-          />
+      <div style={{ display: "flex", justifyContent: "center", gap: 8, marginBottom: 36, flexWrap: "wrap" }}>
+        {FILTERS.map((f) => (
+          <button
+            key={f}
+            onClick={() => setFilter(f)}
+            style={{
+              padding: "7px 18px",
+              borderRadius: 20,
+              cursor: "pointer",
+              outline: "none",
+              fontFamily: "inherit",
+              border: filter === f ? "1px solid rgba(200,138,255,0.4)" : "1px solid rgba(200,138,255,0.08)",
+              background: filter === f ? "rgba(200,138,255,0.14)" : "rgba(200,138,255,0.03)",
+              color: filter === f ? "#c88aff" : "#6a5a88",
+              fontSize: "0.78rem",
+              fontWeight: 600,
+              transition: "all 0.3s ease",
+            }}
+          >
+            {f}
+          </button>
         ))}
       </div>
 
-      {/* Filtered projects */}
-      <div
-        style={{
-          transition: "all 0.5s ease",
-        }}
-      >
-        {filteredProjects.length > 0 ? (
-          filteredProjects.map((project, i) => (
-            <ProjectShowcase
-              key={project.id}
-              project={project}
-              index={i}
-              total={filteredProjects.length}
-            />
-          ))
-        ) : (
-          <p
-            style={{
-              textAlign: "center",
-              color: "#6e7494",
-              padding: "60px 0",
-              fontSize: "0.95rem",
-            }}
-          >
-            No projects match this filter yet — more coming soon!
-          </p>
-        )}
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: 20 }}>
+        {filtered.map((p, i) => (
+          <ProjectCard key={p.id} project={p} index={i} />
+        ))}
       </div>
     </section>
   );
